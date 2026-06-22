@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Mixer | Tornado Mixer{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">Cyber Privacy Layer</p>
+        <h1>Mix assets through a neon-private relay.</h1>
+    </div>
+</section>
+
+<section class="mixer-grid">
+    <article class="glass-card mixer-card deposit-card">
+        <div class="card-heading">
+            <span class="node-marker down"></span>
+            <div>
+                <p class="eyebrow">Deposit</p>
+                <h2>Generate Deposit</h2>
+            </div>
+        </div>
+
+        <form method="post" class="action-form">
+            <input type="hidden" name="action" value="deposit">
+            <button class="neon-button" type="submit">Generate Deposit</button>
+        </form>
+
+        {% if deposit_data %}
+            <div class="neon-alert success pulse">
+                <strong>Deposit Generated</strong>
+                <span>Private note created successfully.</span>
+            </div>
+
+            <div class="secret-panel" data-secret="{{ deposit_data.secret }}">
+                <div class="field-row">
+                    <span>Secret</span>
+                    <code class="masked-secret">{{ deposit_data.masked_secret }}</code>
+                </div>
+                <button class="ghost-button reveal-secret" type="button">Reveal</button>
+            </div>
+
+            <div class="field-row stacked">
+                <span>Nonce</span>
+                <code>{{ deposit_data.nonce }}</code>
+            </div>
+
+        {% else %}
+            <div class="idle-state">
+                <span></span>
+                <p>Ready to generate a new private deposit.</p>
+            </div>
+        {% endif %}
+    </article>
+
+    <article class="glass-card mixer-card withdraw-card">
+        <div class="card-heading">
+            <span class="node-marker up"></span>
+            <div>
+                <p class="eyebrow">Withdraw</p>
+                <h2>Verify & Withdraw</h2>
+            </div>
+        </div>
+
+        <form method="post" class="action-form withdraw-form">
+            <input type="hidden" name="action" value="withdraw">
+
+            <label for="secret">Secret</label>
+            <input id="secret" name="secret" type="text" autocomplete="off" placeholder="Enter secret" required>
+
+            <label for="nonce">Nonce</label>
+            <input id="nonce" name="nonce" type="text" autocomplete="off" placeholder="Enter nonce" required>
+
+            <button class="neon-button purple" type="submit">Verify & Withdraw</button>
+        </form>
+
+        {% if withdraw_result %}
+            <div class="neon-alert {{ withdraw_result.status }} pulse">
+                <strong>{{ withdraw_result.title }}</strong>
+                <span>{{ withdraw_result.message }}</span>
+            </div>
+        {% else %}
+            <div class="terminal-line">Awaiting encrypted withdrawal credentials...</div>
+        {% endif %}
+    </article>
+</section>
+{% endblock %}

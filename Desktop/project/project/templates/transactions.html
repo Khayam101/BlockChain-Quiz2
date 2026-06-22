@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Transactions | Tornado Mixer{% endblock %}
+
+{% block content %}
+<section class="transactions-wrap">
+    {% if public_transactions %}
+        <article class="glass-card table-card">
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Hash</th>
+                            <th>Status</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in public_transactions %}
+                            <tr>
+                                <td>{{ transaction.type }}</td>
+                                <td><code>{{ transaction.hash }}</code></td>
+                                <td>{{ transaction.status }}</td>
+                                <td>{{ transaction.timestamp }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </article>
+    {% else %}
+        <div class="empty-transactions">
+            <p>There is no transaction</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

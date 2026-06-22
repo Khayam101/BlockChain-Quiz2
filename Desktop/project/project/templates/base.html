@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Tornado Mixer{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <main class="shell">
+        <header class="app-header">
+            <div class="brand" aria-label="Tornado Mixer">
+                <span class="brand-sigil">T</span>
+                <span>
+                    <strong>Tornado Mixer</strong>
+                    <small>Private liquidity console</small>
+                </span>
+            </div>
+
+            <nav class="tabs" aria-label="Primary navigation">
+                <a href="{{ url_for('mixer') }}" class="{{ 'active' if request.endpoint == 'mixer' else '' }}">Mixer</a>
+                <a href="{{ url_for('transaction_log') }}" class="{{ 'active' if request.endpoint == 'transaction_log' else '' }}">Transactions</a>
+            </nav>
+        </header>
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
